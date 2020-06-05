@@ -22,13 +22,13 @@ def login_view(request):
 
 
 @login_required(login_url='login')
-def library_list_admin_view(request):
+def library_list_admin_view(request):  # For listing libraries for admin
     libraries = Library.objects.all()
     return render(request, 'library_list_admin.html', {'libraries': libraries})
 
 
 @login_required(login_url='login')
-def library_add_view(request):
+def library_add_view(request):  # For adding new libraries by admin
     if request.method == 'POST':
         library = Library()
         library.name = request.POST.get('name')
@@ -40,7 +40,7 @@ def library_add_view(request):
 
 
 @login_required(login_url='login')
-def library_edit_view(request, id):
+def library_edit_view(request, id):  # For editing existing library
     library = msg = ''
     if id:
         try:
@@ -57,7 +57,7 @@ def library_edit_view(request, id):
 
 
 @login_required(login_url='login')
-def library_delete_view(request, id):
+def library_delete_view(request, id):  # For deleting a library
     if id:
         library = Library.objects.get(id=id)
         library.delete()
@@ -69,19 +69,19 @@ def logout_view(request):
     return redirect('login')
 
 
-def library_view(request):
+def library_view(request):  # For viewing the library list for public
     libraries = Library.objects.all()
     return render(request, 'library_list.html', {'libraries': libraries})
 
 
-def library_detail_view(request, id):
+def library_detail_view(request, id):  # For viewing the individual library and reviews
     library = ''
     reviews = ''
     if id:
         library = Library.objects.get(id=id)
         reviews = Reviews.objects.filter(library__id=library.id, is_approve=True)
 
-    if request.method == 'POST':
+    if request.method == 'POST':  # For posting new review as a guest
         new_review = Reviews()
         new_review.library = library
         new_review.guest = request.POST.get('guest')
@@ -94,7 +94,7 @@ def library_detail_view(request, id):
 
 
 @login_required(login_url='login')
-def admin_library_detail(request, id):
+def admin_library_detail(request, id):  # Detailed view of library for admin can delete or approve reviews.
     library = ''
     reviews = ''
     if id:
@@ -118,7 +118,7 @@ def admin_library_detail(request, id):
 
 
 @login_required(login_url='login')
-def profile_view(request):
+def profile_view(request):  # For viewing the admin profile and updating
     user = request.user
     if request.method == 'POST':
         user.first_name = request.POST.get('first_name')
