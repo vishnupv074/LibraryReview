@@ -115,3 +115,17 @@ def admin_library_detail(request, id):
         reviews = Reviews.objects.filter(library__id=library.id)
 
     return render(request, 'admin_library.html', {'library': library, 'reviews': reviews})
+
+
+@login_required(login_url='login')
+def profile_view(request):
+    user = request.user
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.Address = request.POST.get('address')
+        user.mobile = request.POST.get('phone')
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.save()
+    return render(request, 'profile.html', {'user': user})

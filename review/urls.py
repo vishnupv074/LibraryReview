@@ -11,4 +11,5 @@ urlpatterns = [
     path('', views.library_view, name='library_list'),
     path('library/<int:id>', views.library_detail_view, name="library_detail"),
     path('admin_library/<int:id>', views.admin_library_detail, name="admin_library_detail"),
+    path('admin_profile', views.profile_view, name='profile_view'),
 ]
