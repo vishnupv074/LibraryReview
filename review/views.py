@@ -101,14 +101,14 @@ def admin_library_detail(request, id):  # Detailed view of library for admin can
         library = Library.objects.get(id=id)
         reviews = Reviews.objects.filter(library__id=library.id)
 
-    if request.method == 'POST' and 'approve' in request.POST:
+    if request.method == 'POST' and 'approve' in request.POST:  # Approving review of  library
         id = request.POST.get('approve')
         review = Reviews.objects.get(id=id)
         review.is_approve = True
         review.save()
         reviews = Reviews.objects.filter(library__id=library.id)
 
-    if request.method == 'POST' and 'delete' in request.POST:
+    if request.method == 'POST' and 'delete' in request.POST:  # Deleting review
         id = request.POST.get('delete')
         review = Reviews.objects.get(id=id)
         review.delete()
